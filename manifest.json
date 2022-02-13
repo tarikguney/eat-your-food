@@ -1,6 +1,6 @@
 {
   "name": "Eat Your Food",
-  "description": "If your kids won't eat while they watch Netflix or YouTube, this extension can help by occasionally pause the video to bring back your kids to the present.",
+  "description": "If your kids won't eat while watching Netflix or YouTube, this extension can help by occasionally pausing the video to bring your kids back to the present.",
   "version": "1.0",
   "manifest_version": 3
 }
