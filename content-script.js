@@ -1,17 +1,20 @@
 chrome.runtime.onMessage.addListener(async (message, sender) => {
+
+    console.log("Interruption enabled!")
+    console.log(message)
+
     let interruptTimer;
-    if (message.action === "start") {
+    if (message.enabled) {
         interruptTimer = await startInterruptingNetflix()
     }
 
-    if (message.action === "stop") {
+    if (!message.enabled) {
         clearInterval(interruptTimer);
     }
-})
+});
 
-
-let interruptionInterval = 40000; // 40 seconds
-let pauseTime = 8000; // 8 seconds
+let interruptionInterval = 5000; // 40 seconds
+let pauseTime = 3000; // 8 seconds
 
 async function startInterruptingNetflix() {
     let mediaPlayer = document.getElementsByTagName("video")[0];
