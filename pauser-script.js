@@ -14,8 +14,8 @@ let interruptionInterval = 40000; // 40 seconds
 let pauseTime = 8000; // 8 seconds
 
 async function startInterruptingNetflix() {
-    var mediaPlayer = document.getElementsByTagName("video")[0];
-    var maximumRetryBucket = 1000;
+    let mediaPlayer = document.getElementsByTagName("video")[0];
+    let maximumRetryBucket = 1000;
     while (mediaPlayer == null && maximumRetryBucket >= 0) {
         await new Promise(resolve => setTimeout(resolve, 1000));
         mediaPlayer = document.getElementsByTagName("video")[0];
