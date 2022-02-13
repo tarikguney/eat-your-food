@@ -1,7 +1,13 @@
-chrome.runtime.onMessage.addListener((message, sender) => {
-    
-})
+chrome.runtime.onMessage.addListener(async (message, sender) => {
+    let interruptTimer;
+    if (message.action === "start") {
+        interruptTimer = await startInterruptingNetflix()
+    }
 
+    if (message.action === "stop") {
+        clearInterval(interruptTimer);
+    }
+})
 
 
 let interruptionInterval = 40000; // 40 seconds
@@ -21,7 +27,7 @@ async function startInterruptingNetflix() {
     }
 
     console.info("the netflix media player is found");
-    setInterval(function () {
+    return setInterval(function () {
         if (mediaPlayer.readyState >= 2 && mediaPlayer.paused === false) {
             mediaPlayer.pause();
             console.info("the media player is paused");
