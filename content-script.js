@@ -1,5 +1,3 @@
-//todo Remove debugger
-debugger;
 let interruptTimer;
 chrome.runtime.onMessage.addListener(async (message, sender) => {
 
