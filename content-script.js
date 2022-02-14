@@ -1,9 +1,11 @@
+//todo Remove debugger
+debugger;
+let interruptTimer;
 chrome.runtime.onMessage.addListener(async (message, sender) => {
 
     console.log("Interruption enabled!")
-    console.log(message)
+    console.log(message);
 
-    let interruptTimer;
     if (message.enabled) {
         interruptTimer = await startInterruptingNetflix()
     }

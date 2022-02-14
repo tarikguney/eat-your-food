@@ -20,7 +20,8 @@
     {
       "resources": [
         "popup.js",
-        "popup.html"
+        "popup.html",
+        "content-script.js"
       ],
       "matches": [
         "https://*/*"
