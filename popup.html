@@ -13,8 +13,12 @@
         <h5>Eat Your Food</h5>
     </div>
     <div class="card-body">
+        <span id="wrongSiteBadge" class="badge bg-warning text-dark invisible">To use this extension, please open a video on Netflix or Youtube!</span>
+
         <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
+
         <p><small>Interval and Duration values are in <b><em>seconds.</em></it></b></small></p>
+
         <form class="needs-validation" novalidate>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
@@ -35,9 +39,12 @@
             </div>
             <p><small>The video will be paused every <b><span id="pauseIntervalMessage"></span></b> seconds for <b><span
                     id="pauseDurationMessage"></span></b> seconds.</small></p>
+
             <button class="enable-button btn btn-primary" id="enableInterruption">Enable</button>
         </form>
+
         <p></p>
+
         <p><small>Works with <img src="assets/works-with/youtube-logo.png" height="20"/> and <img
                 src="assets/works-with/netflix-logo.jpg" height="20"/></small></p>
     </div>

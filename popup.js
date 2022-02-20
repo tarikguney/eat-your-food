@@ -1,4 +1,22 @@
-chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result => {
+let _ = work();
+
+async function work() {
+    let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval"])
+
+    let wrongSiteBadge = document.getElementById("wrongSiteBadge")
+    let enableInterruptionButton = document.getElementById("enableInterruption");
+
+    let rightAddress = await onRightAddress();
+    console.log(rightAddress);
+
+    if (rightAddress) {
+        wrongSiteBadge.classList.add("invisible");
+        enableInterruptionButton.disabled = false;
+    } else {
+        wrongSiteBadge.classList.remove("invisible");
+        enableInterruptionButton.disabled = true;
+    }
+
     let pauseDurationInput = document.getElementById("pauseDurationInput");
     let pauseIntervalInput = document.getElementById("pauseIntervalInput");
 
@@ -27,9 +45,7 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result =>
         }
     });
 
-    let enableInterruptionButton = document.getElementById("enableInterruption");
-
-    //
+    // Updating the page cosmetics depending on the saved interruption enabled state.
     chrome.storage.local.get("interruptionEnabled").then(async (result) => {
         updateEnableButtonCosmetics(result.interruptionEnabled)
     });
@@ -39,8 +55,8 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result =>
             return;
         }
         let interruptionConfig = await chrome.storage.local.get("interruptionEnabled");
-        let newEnabledState = !interruptionConfig.interruptionEnabled;
 
+        let newEnabledState = !interruptionConfig.interruptionEnabled;
         await chrome.storage.local.set({"interruptionEnabled": newEnabledState})
 
         updateEnableButtonCosmetics(newEnabledState);
@@ -57,7 +73,6 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result =>
             pauseDuration: parseInt(pauseDurationInput.value)
         };
 
-        console.log(message)
         chrome.tabs.sendMessage(activeTab.id, message);
     });
 
@@ -72,5 +87,14 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result =>
             enableInterruptionButton.innerText = "Enable";
         }
     }
-})
+
+    async function onRightAddress() {
+        let [activeTab] = await chrome.tabs.query({active: true, currentWindow: true});
+        return activeTab.url.startsWith("https://www.netflix.com/watch") ||
+            activeTab.url.startsWith("https://www.youtube.com/watch");
+    }
+
+}
+
+
 
