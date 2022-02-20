@@ -48,9 +48,12 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
         }
 
         let interruptionConfig = await chrome.storage.local.get("interruptionEnabled") || {interruptionEnabled: false};
-        await chrome.storage.local.set({"interruptionEnabled": !interruptionConfig.interruptionEnabled})
 
-        if (!interruptionConfig.interruptionEnabled) {
+        let newEnabledState = !interruptionConfig.interruptionEnabled;
+
+        await chrome.storage.local.set({"interruptionEnabled": newEnabledState})
+
+        if (newEnabledState) {
             enableInterruptionButton.innerText = "Disable";
         } else {
             enableInterruptionButton.innerText = "Enable";
@@ -63,7 +66,7 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
 
         let [activeTab] = await chrome.tabs.query({currentWindow: true, active: true});
         let message = {
-            enabled: !interruptionConfig.interruptionEnabled,
+            enabled: newEnabledState,
             pauseInterval: parseInt(pauseIntervalInput.value),
             pauseDuration: parseInt(pauseDurationInput.value)
         };
