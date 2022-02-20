@@ -14,20 +14,28 @@
     <div class="card-body">
         <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
         <p><small>Interval and Durations are in <b><em>seconds.</em></it></b></small></p>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
-            <input value="40" id="pauseIntervalInput" type="text" class="form-control"
-                   aria-describedby="pauseIntervalSpan">
-        </div>
+        <form class="needs-validation">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
+                <input value="40" id="pauseIntervalInput" type="number" class="form-control"
+                       aria-describedby="pauseIntervalSpan" required>
+                <div class="invalid-tooltip">
+                    Please enter an interval!
+                </div>
+            </div>
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="pauseDurationSpan">Duration</span>
-            <input value="5" id="pauseDurationInput" type="text" class="form-control"
-                   aria-describedby="pauseDurationSpan">
-        </div>
-        <p><small>The video will be paused every <b><span id="pauseIntervalMessage"></span></b> seconds for <b><span
-                id="pauseDurationMessage"></span></b> seconds.</small></p>
-        <a href="#" class="btn btn-primary" id="enableInterruption">Enable</a>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="pauseDurationSpan">Duration</span>
+                <input value="5" id="pauseDurationInput" type="number" class="form-control"
+                       aria-describedby="pauseDurationSpan" required>
+                <div class="invalid-tooltip">
+                    Please provide a duration!
+                </div>
+            </div>
+            <p><small>The video will be paused every <b><span id="pauseIntervalMessage"></span></b> seconds for <b><span
+                    id="pauseDurationMessage"></span></b> seconds.</small></p>
+            <button class="btn btn-primary" type="submit" id="enableInterruption">Enable</button>
+        </form>
         <p></p>
         <p><small>Works with <img src="assets/works-with/youtube-logo.png" height="20"/> and <img
                 src="assets/works-with/netflix-logo.jpg" height="20"/></small></p>
