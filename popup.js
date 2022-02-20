@@ -57,13 +57,18 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
         }
 
         await chrome.storage.sync.set({
-            pauseInterval: pauseIntervalInput.value,
-            pauseDuration: pauseDurationInput.value
+            pauseInterval: parseInt(pauseIntervalInput.value),
+            pauseDuration: parseInt(pauseDurationInput.value)
         })
 
         let [activeTab] = await chrome.tabs.query({currentWindow: true, active: true});
-        let message = {enabled: !interruptionConfig.interruptionEnabled};
+        let message = {
+            enabled: !interruptionConfig.interruptionEnabled,
+            pauseInterval: parseInt(pauseIntervalInput.value),
+            pauseDuration: parseInt(pauseDurationInput.value)
+        };
 
+        console.log(message)
         chrome.tabs.sendMessage(activeTab.id, message);
     });
 })

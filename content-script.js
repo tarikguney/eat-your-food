@@ -1,22 +1,18 @@
 let interruptTimer;
 chrome.runtime.onMessage.addListener(async (message, sender) => {
-
-    console.log("Interruption enabled!")
     console.log(message);
-
     if (message.enabled) {
-        interruptTimer = await startInterruptingNetflix()
+        console.log("Interruption enabled!")
+        interruptTimer = await startInterruptingNetflix(message.pauseDuration * 1000,
+            message.pauseInterval * 1000)
     }
-
     if (!message.enabled) {
         clearInterval(interruptTimer);
+        console.log("Interruption disabled!")
     }
 });
 
-let interruptionInterval = 5000; // 40 seconds
-let pauseTime = 3000; // 8 seconds
-
-async function startInterruptingNetflix() {
+async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseIntervalInMilliseconds) {
     let mediaPlayer = document.getElementsByTagName("video")[0];
     let maximumRetryBucket = 1000;
     while (mediaPlayer == null && maximumRetryBucket >= 0) {
@@ -40,8 +36,8 @@ async function startInterruptingNetflix() {
                     console.info("the media player resumes");
                 });
 
-            }, pauseTime);
+            }, pauseDurationInMilliseconds);
         }
 
-    }, interruptionInterval);
+    }, pauseIntervalInMilliseconds);
 }
