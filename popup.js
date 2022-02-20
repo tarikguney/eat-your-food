@@ -1,54 +1,65 @@
-let pauseDurationInput = document.getElementById("pauseDurationInput");
-let pauseIntervalInput = document.getElementById("pauseIntervalInput");
+chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
+    let pauseDurationInput = document.getElementById("pauseDurationInput");
+    let pauseIntervalInput = document.getElementById("pauseIntervalInput");
 
-let pauseDurationMessage = document.getElementById("pauseDurationMessage");
-let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
+    console.log(result)
+    pauseDurationInput.value = result.pauseDuration;
+    pauseIntervalInput.value = result.pauseInterval;
 
-pauseDurationMessage.innerText = pauseDurationInput.value;
-pauseIntervalMessage.innerText = pauseIntervalInput.value;
+    let pauseDurationMessage = document.getElementById("pauseDurationMessage");
+    let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
 
-pauseDurationInput.addEventListener("change", () => {
-    if (pauseDurationInput.value !== "") {
-        pauseDurationMessage.innerText = pauseDurationInput.value;
-    } else {
-        pauseDurationMessage.innerText = "?";
-    }
-});
+    pauseDurationMessage.innerText = pauseDurationInput.value;
+    pauseIntervalMessage.innerText = pauseIntervalInput.value;
 
-pauseIntervalInput.addEventListener("change", () => {
-    if (pauseIntervalInput.value !== "") {
-        pauseIntervalMessage.innerText = pauseIntervalInput.value;
-    } else {
-        pauseIntervalMessage.innerText = "?";
-    }
-});
+    pauseDurationInput.addEventListener("change", () => {
+        if (pauseDurationInput.value !== "") {
+            pauseDurationMessage.innerText = pauseDurationInput.value;
+        } else {
+            pauseDurationMessage.innerText = "?";
+        }
+    });
 
-let enableInterruptionButton = document.getElementById("enableInterruption");
+    pauseIntervalInput.addEventListener("change", () => {
+        if (pauseIntervalInput.value !== "") {
+            pauseIntervalMessage.innerText = pauseIntervalInput.value;
+        } else {
+            pauseIntervalMessage.innerText = "?";
+        }
+    });
 
-chrome.storage.local.get("interruptionEnabled").then(async (result) => {
-    let final = result || {interruptionEnabled: false};
-    console.log(final)
+    let enableInterruptionButton = document.getElementById("enableInterruption");
 
-    if (final.interruptionEnabled) {
-        enableInterruptionButton.innerText = "Disable";
-    } else {
-        enableInterruptionButton.innerText = "Enable";
-    }
-});
+    chrome.storage.local.get("interruptionEnabled").then(async (result) => {
+        let final = result || {interruptionEnabled: false};
+        console.log(final)
 
-enableInterruptionButton.addEventListener("click", async () => {
+        if (final.interruptionEnabled) {
+            enableInterruptionButton.innerText = "Disable";
+        } else {
+            enableInterruptionButton.innerText = "Enable";
+        }
+    });
 
-    let result = await chrome.storage.local.get("interruptionEnabled") || {interruptionEnabled: false};
+    enableInterruptionButton.addEventListener("click", async () => {
 
-    await chrome.storage.local.set({"interruptionEnabled": !result.interruptionEnabled})
+        if (pauseDurationInput.value === "" || pauseIntervalInput.value === "") {
+            return;
+        }
 
-    if (!result.interruptionEnabled) {
-        enableInterruptionButton.innerText = "Disable";
-    } else {
-        enableInterruptionButton.innerText = "Enable";
-    }
+        let result = await chrome.storage.local.get("interruptionEnabled") || {interruptionEnabled: false};
 
-    let [activeTab] = await chrome.tabs.query({currentWindow: true, active: true});
-    let message = {enabled: !result.interruptionEnabled};
-    chrome.tabs.sendMessage(activeTab.id, message);
-});
+        await chrome.storage.local.set({"interruptionEnabled": !result.interruptionEnabled})
+
+        if (!result.interruptionEnabled) {
+            enableInterruptionButton.innerText = "Disable";
+        } else {
+            enableInterruptionButton.innerText = "Enable";
+        }
+
+        let [activeTab] = await chrome.tabs.query({currentWindow: true, active: true});
+        let message = {enabled: !result.interruptionEnabled};
+        chrome.tabs.sendMessage(activeTab.id, message);
+    });
+})
+

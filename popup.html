@@ -13,12 +13,12 @@
     </div>
     <div class="card-body">
         <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
-        <p><small>Interval and Durations are in <b><em>seconds.</em></it></b></small></p>
+        <p><small>Interval and Duration values are in <b><em>seconds.</em></it></b></small></p>
         <form class="needs-validation">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
-                <input value="40" id="pauseIntervalInput" type="number" class="form-control"
-                       aria-describedby="pauseIntervalSpan" required>
+                <input id="pauseIntervalInput" type="number" class="form-control"
+                       aria-describedby="pauseIntervalSpan" required/>
                 <div class="invalid-tooltip">
                     Please enter an interval!
                 </div>
@@ -26,8 +26,8 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="pauseDurationSpan">Duration</span>
-                <input value="5" id="pauseDurationInput" type="number" class="form-control"
-                       aria-describedby="pauseDurationSpan" required>
+                <input id="pauseDurationInput" type="number" class="form-control"
+                       aria-describedby="pauseDurationSpan" required/>
                 <div class="invalid-tooltip">
                     Please provide a duration!
                 </div>
