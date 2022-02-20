@@ -6,11 +6,36 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
 </head>
 <body>
-<div>
-    <button type="button" class="btn btn-secondary" id="enableInterruption">Enable</button>
-    <div>Developed by Tarik Guney</div>
-    <script src="popup.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+
+<div class="card text-center main">
+    <div class="card-header">
+        Eat Your Food
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Eat Your Food</h5>
+        <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
+        <p><small>Interval and Durations are in <b>seconds.</b></small></p>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
+            <input id="pauseInterval" type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="pauseIntervalSpan">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="pauseDurationSpan">Duration</span>
+            <input id="pauseDuration" type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="pauseDurationSpan">
+        </div>
+
+        <a href="#" class="btn btn-primary" id="enableInterruption">Enable</a>
+    </div>
+    <div class="card-footer text-muted">
+        Developed by Tarik Guney
+    </div>
+</div>
+
+<script src="popup.js"></script>
+<script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
 </div>
 
 </body>

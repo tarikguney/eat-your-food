@@ -1,11 +1,4 @@
-body {
-    height: 200px;
-    width: 250px;
-    border-color: gray;
-    border-style: solid;
-    border-width: thin
-}
-
-#enableInterruption {
-    width:100px;
+.main {
+    height: 400px;
+    width: 400px;
 }
