@@ -1,8 +1,7 @@
-chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
+chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(async result => {
     let pauseDurationInput = document.getElementById("pauseDurationInput");
     let pauseIntervalInput = document.getElementById("pauseIntervalInput");
 
-    console.log(result)
     pauseDurationInput.value = result.pauseDuration;
     pauseIntervalInput.value = result.pauseInterval;
 
@@ -30,34 +29,21 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
 
     let enableInterruptionButton = document.getElementById("enableInterruption");
 
+    //
     chrome.storage.local.get("interruptionEnabled").then(async (result) => {
-        let final = result || {interruptionEnabled: false};
-        console.log(final)
-
-        if (final.interruptionEnabled) {
-            enableInterruptionButton.innerText = "Disable";
-        } else {
-            enableInterruptionButton.innerText = "Enable";
-        }
+        updateEnableButtonCosmetics(result.interruptionEnabled)
     });
 
     enableInterruptionButton.addEventListener("click", async () => {
-
         if (pauseDurationInput.value === "" || pauseIntervalInput.value === "") {
             return;
         }
-
-        let interruptionConfig = await chrome.storage.local.get("interruptionEnabled") || {interruptionEnabled: false};
-
+        let interruptionConfig = await chrome.storage.local.get("interruptionEnabled");
         let newEnabledState = !interruptionConfig.interruptionEnabled;
 
         await chrome.storage.local.set({"interruptionEnabled": newEnabledState})
 
-        if (newEnabledState) {
-            enableInterruptionButton.innerText = "Disable";
-        } else {
-            enableInterruptionButton.innerText = "Enable";
-        }
+        updateEnableButtonCosmetics(newEnabledState);
 
         await chrome.storage.sync.set({
             pauseInterval: parseInt(pauseIntervalInput.value),
@@ -74,5 +60,17 @@ chrome.storage.sync.get(["pauseDuration", "pauseInterval"]).then(result => {
         console.log(message)
         chrome.tabs.sendMessage(activeTab.id, message);
     });
+
+    function updateEnableButtonCosmetics(enableState) {
+        if (enableState) {
+            enableInterruptionButton.classList.remove("btn-primary");
+            enableInterruptionButton.classList.add("btn-danger");
+            enableInterruptionButton.innerText = "Disable";
+        } else {
+            enableInterruptionButton.classList.remove("btn-danger");
+            enableInterruptionButton.classList.add("btn-primary");
+            enableInterruptionButton.innerText = "Enable";
+        }
+    }
 })
 
