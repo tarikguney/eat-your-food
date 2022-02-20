@@ -1,7 +1,18 @@
 .main {
-    width: 420px;
+    width: 440px;
 }
 
 .enable-button{
     width:150px;
+}
+
+.card-background{
+    background-image: url("/assets/icons/popcorn-icon.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 90px 3px;
+}
+
+.card-title{
+    margin-top:7px;
 }

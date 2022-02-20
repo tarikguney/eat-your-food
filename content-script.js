@@ -13,6 +13,9 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 });
 
 async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseIntervalInMilliseconds) {
+    console.log(pauseIntervalInMilliseconds)
+    console.log(pauseDurationInMilliseconds)
+
     let mediaPlayer = document.getElementsByTagName("video")[0];
     let maximumRetryBucket = 1000;
     while (mediaPlayer == null && maximumRetryBucket >= 0) {
@@ -39,5 +42,5 @@ async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseInterv
             }, pauseDurationInMilliseconds);
         }
 
-    }, pauseIntervalInMilliseconds);
+    }, pauseIntervalInMilliseconds + pauseDurationInMilliseconds);
 }
