@@ -31,7 +31,7 @@ async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseInterv
             mediaPlayer.pause();
             console.info("the media player is paused");
             setTimeout(function () {
-                var actualPlayPromise = mediaPlayer.play();
+                let actualPlayPromise = mediaPlayer.play();
                 actualPlayPromise.then(_ => {
                     console.info("the media player resumes");
                 });
