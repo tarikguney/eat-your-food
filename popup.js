@@ -1,3 +1,13 @@
+let pauseDurationInput = document.getElementById("pauseDurationInput");
+let pauseIntervalInput = document.getElementById("pauseIntervalInput");
+
+let pauseDurationMessage = document.getElementById("pauseDurationMessage");
+let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
+
+pauseDurationMessage.innerText = pauseDurationInput.value;
+pauseIntervalMessage.innerText = pauseIntervalInput.value;
+
+
 let enableInterruptionButton = document.getElementById("enableInterruption");
 
 chrome.storage.local.get("interruptionEnabled").then(async (result) => {

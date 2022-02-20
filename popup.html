@@ -9,25 +9,24 @@
 
 <div class="card text-center main">
     <div class="card-header">
-        Eat Your Food
+        <h5>Eat Your Food</h5>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Eat Your Food</h5>
         <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
+        <p><small>Interval and Durations are in <b><em>seconds.</em></it></b></small></p>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="pauseIntervalSpan">Interval:</span>
-            <input id="pauseInterval" type="text" class="form-control"
+            <span class="input-group-text" id="pauseIntervalSpan">Interval</span>
+            <input value="40" id="pauseIntervalInput" type="text" class="form-control"
                    aria-describedby="pauseIntervalSpan">
-            <span class="input-group-text">Seconds</span>
         </div>
 
         <div class="input-group mb-3">
-            <span class="input-group-text" id="pauseDurationSpan">Duration:</span>
-            <input id="pauseDuration" type="text" class="form-control"
+            <span class="input-group-text" id="pauseDurationSpan">Duration</span>
+            <input value="5" id="pauseDurationInput" type="text" class="form-control"
                    aria-describedby="pauseDurationSpan">
-            <span class="input-group-text">Seconds</span>
         </div>
-
+        <p><small>The video will be paused every <b><span id="pauseIntervalMessage"></span></b> seconds for <b><span
+                id="pauseDurationMessage"></span></b> seconds.</small></p>
         <a href="#" class="btn btn-primary" id="enableInterruption">Enable</a>
     </div>
     <div class="card-footer text-muted">
