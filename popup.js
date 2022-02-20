@@ -7,6 +7,21 @@ let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
 pauseDurationMessage.innerText = pauseDurationInput.value;
 pauseIntervalMessage.innerText = pauseIntervalInput.value;
 
+pauseDurationInput.addEventListener("change", () => {
+    if (pauseDurationInput.value !== "") {
+        pauseDurationMessage.innerText = pauseDurationInput.value;
+    } else {
+        pauseDurationMessage.innerText = "?";
+    }
+});
+
+pauseIntervalInput.addEventListener("change", () => {
+    if (pauseIntervalInput.value !== "") {
+        pauseIntervalMessage.innerText = pauseIntervalInput.value;
+    } else {
+        pauseIntervalMessage.innerText = "?";
+    }
+});
 
 let enableInterruptionButton = document.getElementById("enableInterruption");
 
