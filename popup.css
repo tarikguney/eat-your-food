@@ -13,6 +13,17 @@
     background-position: 90px 3px;
 }
 
+.modal-header{
+    background-image: url("/assets/icons/popcorn-icon.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+}
+
+.modal-title{
+    margin-left:35px;
+}
+
 .card-title{
     margin-top:7px;
 }
