@@ -20,9 +20,9 @@ async function work() {
                 trialExpired = true;
 
         if (trialValid) {
-            let trialExpirationBadge = document.getElementById("trialExpirationBadge");
+            let trialOptionsContainer = document.getElementById("trialOptionsContainer");
             let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
-            trialExpirationBadge.style.removeProperty("display");
+            trialOptionsContainer.style.removeProperty("display");
             trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
         }
 
