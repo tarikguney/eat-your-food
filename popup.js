@@ -2,8 +2,12 @@ work();
 
 async function work() {
 
-    let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'))
-    purchasingModal.show();
+    let purchased = await chrome.storage.sync.get(["purchaseInformation","trialActivated"]);
+
+    if (!purchased.purchaseInformation) {
+        let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'))
+        purchasingModal.show();
+    }
 
     let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval"])
 
@@ -77,10 +81,10 @@ async function work() {
 
         if (currentState) {
             interruptedTabs.splice(interruptedTabIndex, 1);
-        }else{
+        } else {
             interruptedTabs.push({
                 tabId: currentTab.id,
-                windowId : currentTab.windowId
+                windowId: currentTab.windowId
             });
         }
 
@@ -123,6 +127,12 @@ async function work() {
         return activeTab.url.startsWith("https://www.netflix.com/watch") ||
             activeTab.url.startsWith("https://www.youtube.com/watch");
     }
+
+    let btnTryIt = document.getElementById("tryItButton");
+    btnTryIt.addEventListener("click", async () => {
+        let activationDate = new Date();
+        await chrome.storage.sync.set({"trialActivated": activationDate.toLocaleString()})
+    });
 
 }
 
