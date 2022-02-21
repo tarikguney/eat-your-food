@@ -6,7 +6,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.netflix.com/watch/*"
+        "https://www.netflix.com/watch/*",
+        "https://www.youtube.com/watch*"
       ],
       "js": [
         "content-script.js"

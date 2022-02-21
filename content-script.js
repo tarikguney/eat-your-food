@@ -2,13 +2,13 @@ let interruptTimer;
 chrome.runtime.onMessage.addListener(async (message, sender) => {
     console.log(message);
     if (message.enabled) {
-        console.log("Interruption enabled!")
+        console.log("EYF: Video pause interruption is enabled!")
         interruptTimer = await startInterruptingNetflix(message.pauseDuration * 1000,
             message.pauseInterval * 1000)
     }
     if (!message.enabled) {
         clearInterval(interruptTimer);
-        console.log("Interruption disabled!")
+        console.log("EYF: Video pause interruption is disabled!")
     }
 });
 
@@ -25,18 +25,18 @@ async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseInterv
     }
 
     if (mediaPlayer == null) {
-        console.error("the netflix media player could not be found!");
+        console.error("EYF: Video player could not be found!");
     }
 
-    console.info("the netflix media player is found");
+    console.info("EYF: Video player is found!");
     return setInterval(function () {
         if (mediaPlayer.readyState >= 2 && mediaPlayer.paused === false) {
             mediaPlayer.pause();
-            console.info("the media player is paused");
+            console.info("EYF: Video is paused for " + pauseDurationInMilliseconds + " milliseconds!");
             setTimeout(function () {
                 let actualPlayPromise = mediaPlayer.play();
                 actualPlayPromise.then(_ => {
-                    console.info("the media player resumes");
+                    console.info("EYF: Video resumes!");
                 });
 
             }, pauseDurationInMilliseconds);
