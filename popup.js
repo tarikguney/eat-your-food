@@ -46,35 +46,61 @@ async function work() {
     });
 
     // Updating the page cosmetics depending on the saved interruption enabled state.
-    chrome.storage.local.get("interruptionEnabled").then(async (result) => {
-        updateEnableButtonCosmetics(result.interruptionEnabled)
+    chrome.storage.sync.get("interruptedTabs").then(async (result) => {
+        let currentTab = await getCurrentTab();
+
+        let interruptedTabIndex = result.interruptedTabs
+            .findIndex(a => a.tabId === currentTab.id && a.windowId === currentTab.windowId);
+
+        let currentState = interruptedTabIndex > -1;
+
+        updateEnableButtonCosmetics(currentState);
     });
 
     enableInterruptionButton.addEventListener("click", async () => {
         if (pauseDurationInput.value === "" || pauseIntervalInput.value === "") {
             return;
         }
-        let interruptionConfig = await chrome.storage.local.get("interruptionEnabled");
+        let interruptedTabs = (await chrome.storage.sync.get("interruptedTabs")).interruptedTabs;
+        let currentTab = await getCurrentTab();
 
-        let newEnabledState = !interruptionConfig.interruptionEnabled;
-        await chrome.storage.local.set({"interruptionEnabled": newEnabledState})
+        console.log(interruptedTabs);
 
-        updateEnableButtonCosmetics(newEnabledState);
+        let interruptedTabIndex = interruptedTabs
+            .findIndex(a => a.tabId === currentTab.id && a.windowId === currentTab.windowId);
+
+        let currentState = interruptedTabIndex > -1;
+
+        if (currentState) {
+            interruptedTabs.slice(interruptedTabIndex, 1);
+        }else{
+            interruptedTabs.push({
+                tabId: currentTab.id,
+                windowId : currentTab.windowId
+            });
+        }
+
+        updateEnableButtonCosmetics(!currentState);
 
         await chrome.storage.sync.set({
             pauseInterval: parseInt(pauseIntervalInput.value),
-            pauseDuration: parseInt(pauseDurationInput.value)
+            pauseDuration: parseInt(pauseDurationInput.value),
+            interruptedTabs: interruptedTabs
         })
 
-        let [activeTab] = await chrome.tabs.query({currentWindow: true, active: true});
         let message = {
-            enabled: newEnabledState,
+            enabled: !currentState,
             pauseInterval: parseInt(pauseIntervalInput.value),
             pauseDuration: parseInt(pauseDurationInput.value)
         };
 
-        chrome.tabs.sendMessage(activeTab.id, message);
+        chrome.tabs.sendMessage(currentTab.id, message);
     });
+
+    async function getCurrentTab() {
+        let [currentTab] = await chrome.tabs.query({active: true, currentWindow: true});
+        return currentTab;
+    }
 
     function updateEnableButtonCosmetics(enableState) {
         if (enableState) {
