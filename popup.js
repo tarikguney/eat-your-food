@@ -1,4 +1,4 @@
-let _ = work();
+work();
 
 async function work() {
     let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval"])
@@ -72,7 +72,7 @@ async function work() {
         let currentState = interruptedTabIndex > -1;
 
         if (currentState) {
-            interruptedTabs.slice(interruptedTabIndex, 1);
+            interruptedTabs.splice(interruptedTabIndex, 1);
         }else{
             interruptedTabs.push({
                 tabId: currentTab.id,

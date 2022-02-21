@@ -1,5 +1,3 @@
-import * as _ from "/assets/utility-js/lodash.core.min.js"
-
 chrome.runtime.onInstalled.addListener(async details => {
     let pauseConfig = await chrome.storage.sync.get(["pauseInterval", "pauseDuration", "interruptedTabs"]);
 
@@ -27,8 +25,7 @@ chrome.tabs.onRemoved.addListener(async function (tabId, removed) {
     let currentState = interruptedTabIndex > -1;
 
     if (currentState) {
-
-        interruptionConfig.interruptedTabs.slice(interruptedTabIndex, 1);
+        interruptionConfig.interruptedTabs.splice(interruptedTabIndex, 1);
         await chrome.storage.local.set({"interruptedTabs": interruptionConfig.interruptedTabs});
     }
 });
@@ -39,5 +36,4 @@ chrome.windows.onRemoved.addListener(async function (windowId) {
     let interruptionConfig = await chrome.storage.local.get("interruptedTabs");
     _.remove(interruptionConfig.interruptedTabs, n => n.windowId === windowId);
     await chrome.storage.local.set({"interruptedTabs": interruptionConfig.interruptedTabs});
-
 });
