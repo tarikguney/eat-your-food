@@ -2,6 +2,7 @@ work();
 
 async function work() {
 
+    // License key 6CmD5IVpbh39wGkNMzAZ0di529yB4JsY
     // Checking if the trial is started or purchased!
     let purchased = await chrome.storage.sync.get(["purchaseInformation", "trialActivated"]);
     let trialValid = false;
@@ -12,10 +13,11 @@ async function work() {
         let trialExpirationDate = new Date();
         trialExpirationDate.setDate(trialActivatedDate.getDate() + 3);
         let todayDate = new Date();
-    /*    trialValid = todayDate <= trialExpirationDate;
-        trialExpired = todayDate > trialExpirationDate;*/
-        trialValid = false;
-        trialExpired = true;
+        trialValid = todayDate <= trialExpirationDate;
+        trialExpired = todayDate > trialExpirationDate;
+        // todo: Delete the following lines. They are for testing.
+                trialValid = false;
+                trialExpired = true;
 
         if (trialValid) {
             let trialExpirationBadge = document.getElementById("trialExpirationBadge");
