@@ -9,10 +9,12 @@ async function work() {
     let trialExpired = false;
 
     if (purchased.trialActivated) {
-        // todo for some reason opening the popup always get the current date, not respecting the activation date.
         let trialActivatedDate = new Date(purchased.trialActivated);
+        console.log(trialActivatedDate.toLocaleString());
         let trialExpirationDate = new Date();
+        trialExpirationDate.setTime(trialActivatedDate.getTime());
         trialExpirationDate.setDate(trialActivatedDate.getDate() + 3);
+        console.log(trialExpirationDate.toLocaleString());
         let todayDate = new Date();
         trialValid = todayDate <= trialExpirationDate;
         trialExpired = todayDate > trialExpirationDate;
@@ -169,6 +171,7 @@ async function work() {
         await chrome.storage.sync.set({"trialActivated": activationDate.toLocaleString()});
 
         let trialExpirationDate = new Date();
+        trialExpirationDate.setTime(activationDate.getTime());
         trialExpirationDate.setDate(activationDate.getDate() + 3);
 
         let trialOptionsContainer = document.getElementById("trialOptionsContainer");
