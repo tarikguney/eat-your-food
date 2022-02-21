@@ -1,6 +1,10 @@
 work();
 
 async function work() {
+
+    let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'))
+    purchasingModal.show();
+
     let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval"])
 
     let wrongSiteBadge = document.getElementById("wrongSiteBadge")
