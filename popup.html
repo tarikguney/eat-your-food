@@ -13,7 +13,7 @@
         <h5 class="card-title">Eat Your Food, Kids!</h5>
     </div>
     <div class="card-body">
-        <span id="wrongSiteBadge" class="badge bg-warning text-dark invisible">To use this extension, please open a video on Netflix or Youtube!</span>
+        <span id="wrongSiteBadge" class="badge bg-warning text-dark" style="display:none">To use this extension, please open a video on Netflix or Youtube!</span>
 
         <p class="card-text">Choose your pause interval and duration and click "Enable". </p>
 
@@ -47,6 +47,10 @@
 
         <p><small>Works with <img src="assets/works-with/youtube-logo.png" height="20"/> and <img
                 src="assets/works-with/netflix-logo.jpg" height="20"/></small></p>
+
+        <span id="trialExpirationBadge" class="badge bg-dark text-ligh" style="display:none">
+            Your trial will expire at <span id="trialExpirationDateSpan"></span>
+        </span>
     </div>
     <div class="card-footer text-muted">
         Developed by Tarik Guney
@@ -58,12 +62,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Eat Your Food, Kids!</h5>
-
             </div>
             <div class="modal-body">
+                <span id="trialExpirationModalBadge" class="badge bg-dark text-light" style="margin-left:50px;display:none">
+                     Your trial expired on <span id="trialExpirationDateModalSpan"></span>
+                </span>
                 <p>Thanks for choosing us! This is a paid extension and costs only 1.99 USD. Once purchased, it can be used forever! </p>
                 <p>By purchasing it, you will support its future development and the author of the extension.</p>
-                <p>However, you can also give it a try with 3-day trial version!</p>
+                <p id="tryMention">However, you can also give it a try with 3-day trial version!</p>
                 <b>Already purchased?</b>
                 <p>Thank you! Please <a href="#">enter your license information here</a> to unlock the full version!</p>
             </div>

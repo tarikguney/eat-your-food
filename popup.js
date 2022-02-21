@@ -2,10 +2,42 @@ work();
 
 async function work() {
 
-    let purchased = await chrome.storage.sync.get(["purchaseInformation","trialActivated"]);
+    // Checking if the trial is started or purchased!
+    let purchased = await chrome.storage.sync.get(["purchaseInformation", "trialActivated"]);
+    let trialValid = false;
+    let trialExpired = false;
 
-    if (!purchased.purchaseInformation) {
-        let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'))
+    if (purchased.trialActivated) {
+        let trialActivatedDate = new Date(purchased.trialActivated);
+        let trialExpirationDate = new Date();
+        trialExpirationDate.setDate(trialActivatedDate.getDate() + 3);
+        let todayDate = new Date();
+    /*    trialValid = todayDate <= trialExpirationDate;
+        trialExpired = todayDate > trialExpirationDate;*/
+        trialValid = false;
+        trialExpired = true;
+
+        if (trialValid) {
+            let trialExpirationBadge = document.getElementById("trialExpirationBadge");
+            let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
+            trialExpirationBadge.style.removeProperty("display");
+            trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
+        }
+
+        if (trialExpired) {
+            let trialExpirationModalBadge = document.getElementById("trialExpirationModalBadge");
+            let trialExpirationDateModalSpan = document.getElementById("trialExpirationDateModalSpan")
+            trialExpirationModalBadge.style.removeProperty("display");
+            trialExpirationDateModalSpan.innerText = trialExpirationDate.toLocaleString();
+            let tryItButton = document.getElementById("tryItButton");
+            tryItButton.style.display = "none";
+            let tryMention = document.getElementById("tryMention");
+            tryMention.style.display = "none";
+        }
+    }
+
+    if (!trialValid && !purchased.purchaseInformation) {
+        let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'));
         purchasingModal.show();
     }
 
@@ -18,10 +50,10 @@ async function work() {
     console.log(rightAddress);
 
     if (rightAddress) {
-        wrongSiteBadge.classList.add("invisible");
+        wrongSiteBadge.style.display = "none";
         enableInterruptionButton.disabled = false;
     } else {
-        wrongSiteBadge.classList.remove("invisible");
+        wrongSiteBadge.style.removeProperty("display")
         enableInterruptionButton.disabled = true;
     }
 
