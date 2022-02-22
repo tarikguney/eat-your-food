@@ -51,11 +51,41 @@
             <span id="trialExpirationBadge" class="badge bg-dark text-ligh">
                 Your trial will expire at <span id="trialExpirationDateSpan"></span>
             </span>
-            <p><small><a href="#">Purchase</a> or <a href="#">Enter Your Key</a></small></p>
+            <p><small><a href="https://tarikguney.test.onfastspring.com/eat-your-food-kids-extension" target="_blank">Purchase</a>
+                or <a id="enterYourKey" href="#">Enter Your Key</a></small></p>
         </div>
     </div>
     <div class="card-footer text-muted">
         Developed by Tarik Guney
+    </div>
+</div>
+
+<div class="modal fade" id="productKeyModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="productKeyModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Key</h5>
+            </div>
+            <div class="modal-body">
+                <p>Thanks for purchasing the full version! Please enter your product key below:</p>
+                <p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="emailInput">Email</span>
+                    <input type="text" class="form-control" placeholder="Email Address"
+                           aria-describedby="emailInput">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="productKeyInput">Key</span>
+                    <input type="text" class="form-control" placeholder="Product Key"
+                           aria-describedby="productKeyInput">
+                </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
     </div>
 </div>
 
