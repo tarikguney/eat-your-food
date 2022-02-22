@@ -19,9 +19,9 @@ async function work() {
         trialValid = todayDate <= trialExpirationDate;
         trialExpired = todayDate > trialExpirationDate;
         // todo: Delete the following lines. They are for testing.
-        trialValid = false;
+    /*    trialValid = false;
         trialExpired = true;
-
+*/
         if (trialValid) {
             let trialOptionsContainer = document.getElementById("trialOptionsContainer");
             let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
@@ -179,19 +179,6 @@ async function work() {
         trialOptionsContainer.style.removeProperty("display");
         trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
     });
-
-    let enterYourKey = document.getElementById("enterYourKey");
-    enterYourKey.addEventListener("click", () => {
-        let productKeyModal = new bootstrap.Modal(document.getElementById('productKeyModal'));
-        productKeyModal.show();
-    });
-
-    let productKeyInPurchasingModal = document.getElementById("productKeyInPurchasingModal")
-    productKeyInPurchasingModal.addEventListener("click", () => {
-        let productKeyModal = new bootstrap.Modal(document.getElementById('productKeyModal'));
-        productKeyModal.show();
-    });
-
 
 }
 
