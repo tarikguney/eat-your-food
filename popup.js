@@ -8,7 +8,7 @@ async function work() {
     let trialValid = false;
     let trialExpired = false;
 
-    if (purchased.trialActivated) {
+    if (!purchased.purchaseInformation && purchased.trialActivated) {
         let trialActivatedDate = new Date(purchased.trialActivated);
         console.log(trialActivatedDate.toLocaleString());
         let trialExpirationDate = new Date();
@@ -19,9 +19,9 @@ async function work() {
         trialValid = todayDate <= trialExpirationDate;
         trialExpired = todayDate > trialExpirationDate;
         // todo: Delete the following lines. They are for testing.
-    /*    trialValid = false;
-        trialExpired = true;
-*/
+        /*    trialValid = false;
+            trialExpired = true;
+    */
         if (trialValid) {
             let trialOptionsContainer = document.getElementById("trialOptionsContainer");
             let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
@@ -178,6 +178,30 @@ async function work() {
         let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
         trialOptionsContainer.style.removeProperty("display");
         trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
+    });
+
+    let btnSaveProductKey = document.getElementById("btnSaveProductKey");
+    btnSaveProductKey.addEventListener("click", async () => {
+        let productEmail = document.getElementById("productEmail");
+        let productKey = document.getElementById("productKey");
+
+        if (productKey.value === "6CmD5IVpbh39wGkNMzAZ0di529yB4JsY") {
+            await chrome.storage.sync.set({
+                "purchaseInformation": {
+                    productKey: productKey.value,
+                    email: productEmail.value
+                }
+            });
+
+            // todo: Show a toast message here.
+        } else {
+            // todo: Show a toast message here.
+        }
+
+        // todo: Remove this line!
+        let pi = await chrome.storage.sync.get("purchaseInformation");
+        console.log(pi.purchaseInformation);
+
     });
 
 }

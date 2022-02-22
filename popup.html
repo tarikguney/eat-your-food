@@ -73,7 +73,7 @@
                 <form id="productKeyForm" class="needs-validation" novalidate>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="emailInput">Email</span>
-                        <input type="email" class="form-control" placeholder="Email Address"
+                        <input id="productEmail" type="email" class="form-control" placeholder="Email Address"
                                aria-describedby="emailInput" required>
                         <div class="invalid-tooltip">
                             Email is required and must be in email format.
@@ -81,7 +81,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="productKeyInput">Key</span>
-                        <input type="text" class="form-control" placeholder="Product Key"
+                        <input id="productKey" type="text" class="form-control" placeholder="Product Key"
                                aria-describedby="productKeyInput" required>
                         <div class="invalid-tooltip">
                             Product Key is required!
@@ -94,7 +94,7 @@
                     Chrome toolbar again.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="productKeyForm" class="btn btn-primary">Save</button>
+                <button id="btnSaveProductKey" type="submit" form="productKeyForm" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
