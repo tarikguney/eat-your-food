@@ -92,6 +92,33 @@
                 </p>
                 <p><small><b>To exit this dialog without saving</b>, please click the extension button on the Google
                     Chrome toolbar again.</small></p>
+
+                <div id="invalidProductKeyToast"
+                     class="toast align-items-center text-white border-0 position-absolute top-50 start-50 translate-middle bg-danger"
+                     role="alert" aria-live="assertive" style="z-index:1000"
+                     aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Incorrect information! Please check your product key and email and try again!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div id="thanksForPurchasingToast"
+                     class="toast align-items-center text-white border-0 position-absolute top-50 start-50 translate-middle bg-success"
+                     role="alert" aria-live="assertive" style="z-index:1000"
+                     aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Thanks for your purchase! You are using the full version of this extension now. Please
+                            re-open the extension by clicking the icon on the Google Chrome toolbar!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="btnSaveProductKey" type="submit" form="productKeyForm" class="btn btn-primary">Save</button>
@@ -132,15 +159,6 @@
     </div>
 </div>
 
-<div id="invalidProductKeyToast" data-bs-target="purchasingModal" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-        <strong class="me-auto">Incorrect Product Key</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-        Please check your product key and email and try again!
-    </div>
-</div>
 
 <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="popup.js"></script>

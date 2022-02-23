@@ -194,7 +194,9 @@ async function work() {
                 }
             });
 
-            // todo: Show a toast message here.
+            let thanksForPurchasingToastEl = document.getElementById('thanksForPurchasingToast')
+            let thanksForPurchasingToast = new bootstrap.Toast(thanksForPurchasingToastEl);
+            thanksForPurchasingToast.show();
         } else {
             let invalidProductKeyToastEl = document.getElementById('invalidProductKeyToast')
             let invalidProductKeyToast = new bootstrap.Toast(invalidProductKeyToastEl);
