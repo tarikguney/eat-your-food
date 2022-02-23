@@ -118,6 +118,8 @@
                 <b>Already purchased?</b>
                 <p>Thank you! Please <a data-bs-toggle="modal" data-bs-target="#productKeyModal" href="#">enter your
                     product key information here</a> to unlock the full version!</p>
+
+
             </div>
             <div class="modal-footer">
                 <button id="tryItButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Try it for 3
@@ -127,6 +129,16 @@
                    class="btn btn-primary">Purchase Securely</a>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="invalidProductKeyToast" data-bs-target="purchasingModal" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <strong class="me-auto">Incorrect Product Key</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Please check your product key and email and try again!
     </div>
 </div>
 

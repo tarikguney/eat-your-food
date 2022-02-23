@@ -185,6 +185,7 @@ async function work() {
         let productEmail = document.getElementById("productEmail");
         let productKey = document.getElementById("productKey");
 
+
         if (productKey.value === "6CmD5IVpbh39wGkNMzAZ0di529yB4JsY") {
             await chrome.storage.sync.set({
                 "purchaseInformation": {
@@ -195,7 +196,9 @@ async function work() {
 
             // todo: Show a toast message here.
         } else {
-            // todo: Show a toast message here.
+            let invalidProductKeyToastEl = document.getElementById('invalidProductKeyToast')
+            let invalidProductKeyToast = new bootstrap.Toast(invalidProductKeyToastEl);
+            invalidProductKeyToast.show();
         }
 
         // todo: Remove this line!
