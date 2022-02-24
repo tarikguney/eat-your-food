@@ -33,18 +33,6 @@
     "128": "/assets/icons/128.png",
     "48": "/assets/icons/48.png"
   },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "popup.js",
-        "popup.html",
-        "content-script.js"
-      ],
-      "matches": [
-        "https://*/*"
-      ]
-    }
-  ],
   "permissions": [
     "storage",
     "activeTab",
