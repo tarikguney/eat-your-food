@@ -1,0 +1,41 @@
+{
+  "name": "Eat Your Food, Kids!",
+  "description": "Automatically pauses and resumes YouTube and Netflix videos.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.netflix.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "content-script.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/assets/icons/16.png",
+      "32": "/assets/icons/32.png",
+      "48": "/assets/icons/48.png",
+      "128": "/assets/icons/128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "/assets/icons/16.png",
+    "32": "/assets/icons/32.png",
+    "128": "/assets/icons/128.png",
+    "48": "/assets/icons/48.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ]
+}
