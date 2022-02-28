@@ -4,7 +4,8 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
     if (message.enabled) {
         console.log("EYF: Video pause interruption is enabled!")
         interruptTimer = await startInterruptingNetflix(message.pauseDuration * 1000,
-            message.pauseInterval * 1000)
+            message.pauseInterval * 1000,
+            message.overlayEnabled)
     }
     if (!message.enabled) {
         clearInterval(interruptTimer);
@@ -14,7 +15,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 createPauseOverlay();
 
-async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseIntervalInMilliseconds) {
+async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseIntervalInMilliseconds, overlayEnabled) {
     console.log(pauseIntervalInMilliseconds)
     console.log(pauseDurationInMilliseconds)
 
@@ -36,13 +37,17 @@ async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseInterv
     return setInterval(function () {
         if (mediaPlayer.readyState >= 2 && mediaPlayer.paused === false) {
             mediaPlayer.pause();
-            pauseOverlay.style.removeProperty("display");
+            if (overlayEnabled) {
+                pauseOverlay.style.removeProperty("display");
+            }
             console.info("EYF: Video is paused for " + pauseDurationInMilliseconds + " milliseconds!");
             setTimeout(function () {
                 let actualPlayPromise = mediaPlayer.play();
                 actualPlayPromise.then(_ => {
                     console.info("EYF: Video resumes!");
-                    pauseOverlay.style.display = "none";
+                    if (overlayEnabled) {
+                        pauseOverlay.style.display = "none";
+                    }
                 });
 
             }, pauseDurationInMilliseconds);
@@ -51,7 +56,7 @@ async function startInterruptingNetflix(pauseDurationInMilliseconds, pauseInterv
     }, pauseIntervalInMilliseconds + pauseDurationInMilliseconds);
 }
 
-function createPauseOverlay(){
+function createPauseOverlay() {
     let overlayDiv = document.createElement("div");
 
     overlayDiv.id = "pauseOverlay";

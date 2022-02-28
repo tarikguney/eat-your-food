@@ -46,7 +46,7 @@ async function work() {
         purchasingModal.show();
     }
 
-    let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval"])
+    let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval", "overlayEnabled"])
 
     let wrongSiteBadge = document.getElementById("wrongSiteBadge")
     let enableInterruptionButton = document.getElementById("enableInterruption");
@@ -68,6 +68,7 @@ async function work() {
 
     pauseDurationInput.value = result.pauseDuration;
     pauseIntervalInput.value = result.pauseInterval;
+    pauseOverlaySwitch.checked = result.overlayEnabled;
 
     let pauseDurationMessage = document.getElementById("pauseDurationMessage");
     let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
@@ -131,13 +132,15 @@ async function work() {
         await chrome.storage.sync.set({
             pauseInterval: parseInt(pauseIntervalInput.value),
             pauseDuration: parseInt(pauseDurationInput.value),
+            overlayEnabled: pauseOverlaySwitch.checked,
             interruptedTabs: interruptedTabs
         })
 
         let message = {
             enabled: !currentState,
             pauseInterval: parseInt(pauseIntervalInput.value),
-            pauseDuration: parseInt(pauseDurationInput.value)
+            pauseDuration: parseInt(pauseDurationInput.value),
+            overlayEnabled: pauseOverlaySwitch.checked
         };
 
         chrome.tabs.sendMessage(currentTab.id, message);
