@@ -17,7 +17,20 @@
         "content-script.css"
       ]
     }
-  ],
+  ],  "web_accessible_resources": [
+  {
+    "resources": [
+      "popup.js",
+      "popup.html",
+      "popup.css",
+      "content-script.js",
+      "content-script.css"
+    ],
+    "matches": [
+      "https://*/*"
+    ]
+  }
+],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
