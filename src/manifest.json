@@ -1,7 +1,7 @@
 {
   "name": "Eat Your Food, Kids!",
   "description": "Automatically pauses and resumes YouTube and Netflix videos.",
-  "version": "1.0",
+  "version": "1.5",
   "manifest_version": 3,
   "content_scripts": [
     {

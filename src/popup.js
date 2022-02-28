@@ -64,6 +64,7 @@ async function work() {
 
     let pauseDurationInput = document.getElementById("pauseDurationInput");
     let pauseIntervalInput = document.getElementById("pauseIntervalInput");
+    let pauseOverlaySwitch = document.getElementById("pauseOverlaySwitch");
 
     pauseDurationInput.value = result.pauseDuration;
     pauseIntervalInput.value = result.pauseInterval;
@@ -154,12 +155,14 @@ async function work() {
             enableInterruptionButton.innerText = "Disable";
             pauseDurationInput.disabled = true;
             pauseIntervalInput.disabled = true;
+            pauseOverlaySwitch.disabled = true;
         } else {
             enableInterruptionButton.classList.remove("btn-danger");
             enableInterruptionButton.classList.add("btn-primary");
             enableInterruptionButton.innerText = "Enable";
             pauseDurationInput.disabled = false;
             pauseIntervalInput.disabled = false;
+            pauseOverlaySwitch.disabled = false;
         }
     }
 
