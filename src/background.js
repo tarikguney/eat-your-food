@@ -22,7 +22,7 @@ chrome.tabs.onRemoved.addListener(async function (tabId, removed) {
 
     if (interruptedTabIndex > -1) {
         interruptedTabs.splice(interruptedTabIndex, 1);
-        await chrome.storage.sync.set({"interruptedTabs": interruptedTabs});
+        await chrome.storage.sync.set({"interruptedTabs": interruptedTabs || []});
     }
 });
 

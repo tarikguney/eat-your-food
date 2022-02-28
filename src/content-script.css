@@ -1,0 +1,22 @@
+.pause-overlay{
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 10000; /* Sit on top */
+    left: 0;
+    top: 0;
+    display:flex;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.6); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    flex-direction: column;
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+    align-items: center;
+    justify-content: center;
+}
+
+.pause-overlay .content {
+    font-size:80px;
+    color: white;
+}
