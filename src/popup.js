@@ -152,10 +152,14 @@ async function work() {
             enableInterruptionButton.classList.remove("btn-primary");
             enableInterruptionButton.classList.add("btn-danger");
             enableInterruptionButton.innerText = "Disable";
+            pauseDurationInput.disabled = true;
+            pauseIntervalInput.disabled = true;
         } else {
             enableInterruptionButton.classList.remove("btn-danger");
             enableInterruptionButton.classList.add("btn-primary");
             enableInterruptionButton.innerText = "Enable";
+            pauseDurationInput.disabled = false;
+            pauseIntervalInput.disabled = false;
         }
     }
 
