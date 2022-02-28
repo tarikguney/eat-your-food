@@ -59,7 +59,7 @@ function createPauseOverlay(){
     overlayDiv.style.display = "none";
 
     let pauseText = document.createElement("span");
-    pauseText.innerText = "Paused";
+    pauseText.innerText = "=";
     pauseText.classList.add("content");
 
     overlayDiv.append(pauseText);
