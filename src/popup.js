@@ -48,7 +48,6 @@ async function initializeActionPopup() {
     let enableInterruptionButton = document.getElementById("enableInterruption");
 
     let rightAddress = await onRightAddress();
-    console.log(rightAddress);
 
     // If the extension is opened on a site other than YouTube or Netflix, warn the user.
     if (rightAddress) {
@@ -108,8 +107,6 @@ async function initializeActionPopup() {
         }
         let interruptedTabs = (await chrome.storage.sync.get("interruptedTabs")).interruptedTabs;
         let currentTab = await getCurrentTab();
-
-        console.log(interruptedTabs);
 
         let interruptedTabIndex = interruptedTabs
             .findIndex(a => a.tabId === currentTab.id && a.windowId === currentTab.windowId);
