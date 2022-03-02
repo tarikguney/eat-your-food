@@ -1,37 +1,32 @@
-work();
+// Cannot use await keyword in a root w/o async keyword. So, wrapped everything within a function, and calling the function.
+initializeActionPopup().then(r => {
+    // Ignoring the result. Just let it do its work asynchronously.
+});
 
-async function work() {
-
-    // License key 6CmD5IVpbh39wGkNMzAZ0di529yB4JsY
-    // Checking if the trial is started or purchased!
+async function initializeActionPopup() {
     let purchased = await chrome.storage.sync.get(["purchaseInformation", "trialActivated"]);
     let trialValid = false;
-    let trialExpired = false;
 
+    // Performing trial specific actions if the trial is activated but the purchase didn't happen.
     if (!purchased.purchaseInformation && purchased.trialActivated) {
         let trialActivatedDate = new Date(purchased.trialActivated);
-        console.log(trialActivatedDate.toLocaleString());
         let trialExpirationDate = new Date();
         trialExpirationDate.setTime(trialActivatedDate.getTime());
         trialExpirationDate.setDate(trialActivatedDate.getDate() + 3);
-        console.log(trialExpirationDate.toLocaleString());
         let todayDate = new Date();
         trialValid = todayDate <= trialExpirationDate;
-        trialExpired = todayDate > trialExpirationDate;
-        // todo: Delete the following lines. They are for testing.
-        /*    trialValid = false;
-            trialExpired = true;
-    */
-        if (trialValid) {
-            let trialOptionsContainer = document.getElementById("trialOptionsContainer");
-            let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
-            trialOptionsContainer.style.removeProperty("display");
-            trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
-        }
 
-        if (trialExpired) {
+        if (trialValid) {
+            // Showing the footer options where the expiration date is shown alongside with purchase options.
+            let trialOptionsFooter = document.getElementById("trialOptionsFooter");
+            let trialExpirationDateFooterSpan = document.getElementById("trialExpirationDateFooterSpan");
+            trialOptionsFooter.style.removeProperty("display");
+            trialExpirationDateFooterSpan.innerText = trialExpirationDate.toLocaleString();
+        } else {
+            // Hiding trial options in the purchaseModal since the trial is already ended.
+            // Instead, showing when the trial ended in the purchase modal and asking for a purchase.
             let trialExpirationModalBadge = document.getElementById("trialExpirationModalBadge");
-            let trialExpirationDateModalSpan = document.getElementById("trialExpirationDateModalSpan")
+            let trialExpirationDateModalSpan = document.getElementById("trialExpirationDateModalSpan");
             trialExpirationModalBadge.style.removeProperty("display");
             trialExpirationDateModalSpan.innerText = trialExpirationDate.toLocaleString();
             let tryItButton = document.getElementById("tryItButton");
@@ -41,12 +36,13 @@ async function work() {
         }
     }
 
+    // If the trial is not valid or ended and there is no purchase happened, then show the purchase modal.
     if (!trialValid && !purchased.purchaseInformation) {
         let purchasingModal = new bootstrap.Modal(document.getElementById('purchasingModal'));
         purchasingModal.show();
     }
 
-    let result = await chrome.storage.sync.get(["pauseDuration", "pauseInterval", "overlayEnabled"])
+    let pauseSettings = await chrome.storage.sync.get(["pauseDuration", "pauseInterval", "overlayEnabled"])
 
     let wrongSiteBadge = document.getElementById("wrongSiteBadge")
     let enableInterruptionButton = document.getElementById("enableInterruption");
@@ -54,6 +50,7 @@ async function work() {
     let rightAddress = await onRightAddress();
     console.log(rightAddress);
 
+    // If the extension is opened on a site other than YouTube or Netflix, warn the user.
     if (rightAddress) {
         wrongSiteBadge.style.display = "none";
         enableInterruptionButton.disabled = false;
@@ -62,13 +59,14 @@ async function work() {
         enableInterruptionButton.disabled = true;
     }
 
+    // Fill out the duration, interval, and switch inputs from the saved settings during the action popup load.
     let pauseDurationInput = document.getElementById("pauseDurationInput");
     let pauseIntervalInput = document.getElementById("pauseIntervalInput");
     let pauseOverlaySwitch = document.getElementById("pauseOverlaySwitch");
 
-    pauseDurationInput.value = result.pauseDuration;
-    pauseIntervalInput.value = result.pauseInterval;
-    pauseOverlaySwitch.checked = result.overlayEnabled;
+    pauseDurationInput.value = pauseSettings.pauseDuration;
+    pauseIntervalInput.value = pauseSettings.pauseInterval;
+    pauseOverlaySwitch.checked = pauseSettings.overlayEnabled;
 
     let pauseDurationMessage = document.getElementById("pauseDurationMessage");
     let pauseIntervalMessage = document.getElementById("pauseIntervalMessage");
@@ -185,9 +183,9 @@ async function work() {
         trialExpirationDate.setDate(activationDate.getDate() + 3);
 
         let trialOptionsContainer = document.getElementById("trialOptionsContainer");
-        let trialExpirationDateSpan = document.getElementById("trialExpirationDateSpan")
+        let trialExpirationDateFooterSpan = document.getElementById("trialExpirationDateFooterSpan")
         trialOptionsContainer.style.removeProperty("display");
-        trialExpirationDateSpan.innerText = trialExpirationDate.toLocaleString();
+        trialExpirationDateFooterSpan.innerText = trialExpirationDate.toLocaleString();
     });
 
     let btnSaveProductKey = document.getElementById("btnSaveProductKey");
@@ -195,7 +193,11 @@ async function work() {
         let productEmail = document.getElementById("productEmail");
         let productKey = document.getElementById("productKey");
 
-
+        /*
+         Yes, you can see the product key by inspecting the popup. If you made thus far, congratulations!
+         Now, you have two options: Either copy this code and use the extension for free or support the developer by
+         making a tiny amount of purchase.
+         */
         if (productKey.value === "6CmD5IVpbh39wGkNMzAZ0di529yB4JsY") {
             await chrome.storage.sync.set({
                 "purchaseInformation": {
@@ -212,13 +214,7 @@ async function work() {
             let invalidProductKeyToast = new bootstrap.Toast(invalidProductKeyToastEl);
             invalidProductKeyToast.show();
         }
-
-        // todo: Remove this line!
-        let pi = await chrome.storage.sync.get("purchaseInformation");
-        console.log(pi.purchaseInformation);
-
     });
-
 }
 
 
