@@ -4,12 +4,12 @@ initializeActionPopup().then(r => {
 });
 
 async function initializeActionPopup() {
-    let purchased = await chrome.storage.sync.get(["purchaseInformation", "trialActivated"]);
+    let purchased = await chrome.storage.sync.get(["purchaseInformation", "trialActivatedUtc"]);
     let trialValid = false;
 
     // Performing trial specific actions if the trial is activated but the purchase didn't happen.
-    if (!purchased.purchaseInformation && purchased.trialActivated) {
-        let trialActivatedDate = new Date(purchased.trialActivated);
+    if (!purchased.purchaseInformation && purchased.trialActivatedUtc) {
+        let trialActivatedDate = new Date(purchased.trialActivatedUtc);
         let trialExpirationDate = new Date();
         trialExpirationDate.setTime(trialActivatedDate.getTime());
         trialExpirationDate.setDate(trialActivatedDate.getDate() + 3);
@@ -173,15 +173,16 @@ async function initializeActionPopup() {
     let btnTryIt = document.getElementById("tryItButton");
     btnTryIt.addEventListener("click", async () => {
         let activationDate = new Date();
-        await chrome.storage.sync.set({"trialActivated": activationDate.toLocaleString()});
+        // To prevent locale based string problems, using a culture agnostic format.
+        await chrome.storage.sync.set({"trialActivatedUtc": activationDate.toUTCString()});
 
         let trialExpirationDate = new Date();
         trialExpirationDate.setTime(activationDate.getTime());
         trialExpirationDate.setDate(activationDate.getDate() + 3);
 
-        let trialOptionsContainer = document.getElementById("trialOptionsContainer");
+        let trialOptionsFooter = document.getElementById("trialOptionsFooter");
         let trialExpirationDateFooterSpan = document.getElementById("trialExpirationDateFooterSpan")
-        trialOptionsContainer.style.removeProperty("display");
+        trialOptionsFooter.style.removeProperty("display");
         trialExpirationDateFooterSpan.innerText = trialExpirationDate.toLocaleString();
     });
 
