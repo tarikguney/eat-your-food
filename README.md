@@ -1,5 +1,5 @@
 # Eat Your Food, Kids!
 
-You are watching videos on YouTube or Netflix and wanting to automatically pause to the video from time to time to eat some snacks or take a break. Whatever your reasons are, Eat Your Food, Kids! is here to help.
+Whether you're watching videos on YouTube or Netflix and want to pause them periodically to grab some snacks or take a break, Eat Your Food, Kids! is here to help you do just that, no matter your reason.
 
 ![](./store/store-1.png)
